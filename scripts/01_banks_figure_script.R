@@ -196,6 +196,61 @@ sym_box_plot_sorethroat <- filter_sorethroat_sym %>%
 
 plot(sym_box_plot_sorethroat)
 
+### Headache ----
+
+filter_headache_sym <- filter(.data = symptom_data, sym_headache == "Yes")
+
+sym_box_plot_headache <- filter_headache_sym %>%
+  ggplot(aes(x= sym_headache,
+             y= case_age,
+  ))+
+  geom_violin(alpha = 0.15,
+              colour = "#CC6677",
+              fill = "#CC6677")+
+  geom_boxplot(width = 0.2,
+               alpha = 0.7,
+               colour = "#CC6677",
+               fill = "#CC6677")+
+  coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
+  theme_minimal()+
+  theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
+  )
+
+plot(sym_box_plot_headache)
+
+
+### No symptoms
+
+symptom_data_no <- filter(.data = symptom_data, sym_myalgia == "No",
+                           sym_cough == "No", 
+                           sym_fever == "No", 
+                           sym_subjfever == "No", 
+                           sym_losstastesmell == "No",
+                           sym_sorethroat == "No", 
+                           sym_headache == "No")
+
+
+sym_box_plot_none <- symptom_data_no %>%
+  ggplot(aes(x= sym_headache,
+             y= case_age,
+  ))+
+  geom_violin(alpha = 0.15,
+              colour = "#882255",
+              fill = "#882255")+
+  geom_boxplot(width = 0.2,
+               alpha = 0.7,
+               colour = "#882255",
+               fill = "#882255")+
+  coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
+  theme_minimal()+
+  theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
+  )
+
+plot(sym_box_plot_none)
+
+
 
 
 
