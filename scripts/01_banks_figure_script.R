@@ -74,6 +74,7 @@ sym_box_plot_mygalia <- filter_mygalia_sym %>%
                colour = "#332288",
                fill = "#332288")+
   coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
   theme_minimal()+
   theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
         )
@@ -95,6 +96,7 @@ sym_box_plot_cough <- filter_cough_sym %>%
                colour = "#88CCEE",
                fill = "#88CCEE")+
   coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
   theme_minimal()+
   theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
   )
@@ -117,6 +119,7 @@ sym_box_plot_fever <- filter_fever_sym %>%
                colour = "#44AA99",
                fill = "#44AA99")+
   coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
   theme_minimal()+
   theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
   )
@@ -124,7 +127,77 @@ sym_box_plot_fever <- filter_fever_sym %>%
 plot(sym_box_plot_fever)
 
 
+### Subjfever ----
+
+filter_subjfever_sym <- filter(.data = symptom_data, sym_subjfever == "Yes")
+
+sym_box_plot_subjfever <- filter_subjfever_sym %>%
+  ggplot(aes(x= sym_subjfever,
+             y= case_age,
+  ))+
+  geom_violin(alpha = 0.15,
+              colour = "#117733",
+              fill = "#117733")+
+  geom_boxplot(width = 0.2,
+               alpha = 0.7,
+               colour = "#117733",
+               fill = "#117733")+
+  coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
+  theme_minimal()+
+  theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
+  )
+
+plot(sym_box_plot_subjfever)
+
+### Loss of taste and smell ----
+
+filter_losstastesmell_sym <- filter(.data = symptom_data, sym_losstastesmell == "Yes")
+
+sym_box_plot_losstastesmell <- filter_losstastesmell_sym %>%
+  ggplot(aes(x= sym_losstastesmell,
+             y= case_age,
+  ))+
+  geom_violin(alpha = 0.15,
+              colour = "#999933",
+              fill = "#999933")+
+  geom_boxplot(width = 0.2,
+               alpha = 0.7,
+               colour = "#999933",
+               fill = "#999933")+
+  coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
+  theme_minimal()+
+  theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
+  )
+
+plot(sym_box_plot_losstastesmell)
+
+### Sorethroat ----
+
+filter_sorethroat_sym <- filter(.data = symptom_data, sym_sorethroat == "Yes")
+
+sym_box_plot_sorethroat <- filter_sorethroat_sym %>%
+  ggplot(aes(x= sym_sorethroat,
+             y= case_age,
+  ))+
+  geom_violin(alpha = 0.15,
+              colour = "#DDCC77",
+              fill = "#DDCC77")+
+  geom_boxplot(width = 0.2,
+               alpha = 0.7,
+               colour = "#DDCC77",
+               fill = "#DDCC77")+
+  coord_flip()+ # flips to make the graph horizontal
+  ylim(0,110)+
+  theme_minimal()+
+  theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
+  )
+
+plot(sym_box_plot_sorethroat)
 
 
-sym_three_combined <- sym_box_plot_mygalia / sym_box_plot_cough / sym_box_plot_fever
-plot(sym_three_combined)
+
+
+sym_six_combined <- sym_box_plot_mygalia / sym_box_plot_cough / sym_box_plot_fever / sym_box_plot_subjfever/sym_box_plot_losstastesmell/ sym_box_plot_sorethroat
+plot(sym_six_combined)
