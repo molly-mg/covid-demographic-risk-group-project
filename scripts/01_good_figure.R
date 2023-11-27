@@ -26,5 +26,11 @@ summarize(
   avg_age=mean((case_age))
 )
 
+hopsital_covid <- select(.data = covid, case_age, died, died_covid, hospitalized)
 
+ggplot(data = covid, aes(x = hospitalized, y = case_age)) +
+  geom_boxplot(aes(fill = hospitalized),
+               alpha = 0.7, 
+               width = 0.5, # change width of boxplot
+               show.legend = FALSE)
 
