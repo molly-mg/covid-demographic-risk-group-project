@@ -33,4 +33,19 @@ ggplot(data = covid, aes(x = hospitalized, y = case_age)) +
                alpha = 0.7, 
                width = 0.5, # change width of boxplot
                show.legend = FALSE)
+glimpse(covid)
+
+covid %>% 
+  group_by(case_age) %>% 
+  summarise(n = n())
+  print(n = 80)
+
+prob_obs_age <- covid %>% 
+    group_by(case_age) %>% 
+    summarise(n = n()) %>% 
+    mutate(prob_obs = n/sum(n))
+
+covid %>% 
+  ggplot()+
+  geom_bar(aes(x=case_age))
 
