@@ -1,18 +1,59 @@
 # PACKAGES ----
 library(tidyverse)
+library(dplyr)
 #__________________________----
 
-# IMPORT DATA
+# IMPORT DATA ----
 source('scripts/clean_data.R')
 # Data is imported as covid
 
-colnames(covid)
+#_________________________----
 
-#covid <- na.omit(covid)
+# DATA EXPLORATION
+
+colnames(covid) # visualise all variables in the dataset
+
+covid <- rename(covid, "gender" = "case_gender", 
+                   "age" = "case_age",
+                   "hospitalised"="hospitalized",) # using rename from dplyr to make variables concise
+
+select(.data = covid, 
+       age, gender, died_covid, hospitalised) # the variables you want to select
+
+hospital_covid <- select(.data = covid, 
+                       age, gender, hospitalised, died_covid) # selecting data of interest
+
+## EXPLORING THE VARIABLES ----
+
+glimpse(hospital_covid)
+
+covid %>% 
+  group_by(hospitalised) %>% 
+  summarise(n = n())
+
+covid %>% 
+  group_by(gender) %>% 
+  summarise(n = n())
+
+covid%>%
+  filter(hospitalised == "Yes") %>%
+  ggplot()+
+  geom_bar(aes(x=age))
+
+covid%>%
+  filter(died_covid == "Yes") %>%
+  ggplot()+
+  geom_bar(aes(x=age))
 
 
-#covid <- covid %>% 
-#  mutate(hospitalized = recode(hospitalized, "No" = 0, "Yes" = 1)
+
+
+
+
+
+
+
+
 
 
 
@@ -49,3 +90,10 @@ covid %>%
   ggplot()+
   geom_bar(aes(x=case_age))
 
+covid %>% 
+  group_by(case_gender) %>% 
+  summarise(n = n())
+
+covid %>% 
+  summarise(
+    mean_case_age = mean(case_age, na.rm=TRUE))
