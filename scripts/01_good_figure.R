@@ -143,3 +143,26 @@ hospital_covid %>%
 hospital_covid %>% 
   pull(age) %>% 
   car::qqPlot() # qqplot to assess deviation from idealised distribution
+
+# ___________________----
+
+
+# STARTING TO FORM PLOTS ----
+
+filter(.data = hospital_covid, confirmed_case != "NA") %>%
+  ggplot(aes(y = confirmed_case,
+             x = age,
+             fill = confirmed_case))+ # plot 1 confirmed cases
+  geom_density_ridges()
+
+filter(.data = hospital_covid) %>%
+  ggplot(aes(y = hospitalised,
+             x = age,
+             fill = hospitalised))+ # plot 2 hospitalised
+  geom_density_ridges() 
+
+filter(.data = hospital_covid, died_covid != "Under Review") %>%
+  ggplot(aes(y = died_covid,
+             x = age,
+             fill = died_covid))+ # plot 3 died from covid
+  geom_density_ridges() 
