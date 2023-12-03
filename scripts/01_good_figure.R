@@ -1,6 +1,7 @@
 # PACKAGES ----
 library(tidyverse)
 library(dplyr)
+library(ggridges)
 #__________________________----
 
 # IMPORT DATA ----
@@ -85,4 +86,45 @@ hospital_covid %>%
                      fill=died_covid), 
                  position = "identity",
                  colour="black") # visualising hospitalisation by died from covid
+
+filter(.data = hospital_covid, hospitalised == "Yes") %>%
+  ggplot(aes(age))+
+  geom_histogram(bins=50, 
+                 aes(y=..density..,
+                     fill=hospitalised), 
+                 position = "identity",
+                 colour="black") # visualising only invivduals who were hospitalised
+
+
+filter(.data = hospital_covid, hospitalised == "Yes") %>%
+ggplot(aes(age))+
+  geom_histogram(bins=50, 
+                 aes(y=..density..,
+                     fill=died_covid), 
+                 position = "identity",
+                 colour="black") # visualising hospitalised individuals who died from covid
+
+
+filter(.data = hospital_covid, hospitalised == "Yes", died_covid == "Under Review") %>%
+  ggplot(aes(age))+
+  geom_histogram(bins=50, 
+                 aes(y=..density..,
+                     fill=died_covid), 
+                 position = "identity",
+                 colour="black") # visualising data where covid death is under review
+
+filter(.data = hospital_covid, hospitalised == "Yes", died_covid != "Under Review") %>%
+  ggplot(aes(age))+
+  geom_histogram(bins=50, 
+                 aes(y=..density..,
+                     fill=died_covid), 
+                 position = "identity",
+                 colour="black") # visualising data where covid death does not include data 'under review'
+
+
+#____________________________----
+
+# EXPLORING DISTRIBUTIONS ----
+
+
 
