@@ -14,8 +14,7 @@ source('scripts/clean_data.R')
 
 colnames(covid) # visualise all variables in the dataset
 
-covid <- rename(covid, "gender" = "case_gender", 
-                   "age" = "case_age",
+covid <- rename(covid, "age" = "case_age",
                    "hospitalised"="hospitalized",) # using rename from dplyr to make variables concise
 
 #_________________________----
@@ -23,9 +22,9 @@ covid <- rename(covid, "gender" = "case_gender",
 # DATA EXPLORATION ----
 
 select(.data = covid, 
-       age, gender, died_covid, hospitalised) # the variables you want to select
+       age, died_covid, hospitalised) # the variables you want to select
 
-hospital_covid <- select(.data = covid, hospitalised, age, gender, died_covid) # selecting data of interest
+hospital_covid <- select(.data = covid, confirmed_case, hospitalised, age, died_covid) # selecting data of interest
 
 #__________________________----
 
@@ -42,12 +41,14 @@ hospital_covid %>%                                    # Count NA by group
 hospital_covid %>%                                    # Count NA by group
   dplyr::summarize(count_na = sum(is.na(hospitalised)))
 
-hospital_covid %>%                                    # Count NA by group
-  dplyr::summarize(count_na = sum(is.na(gender)))
+hospital_covid <- hospital_covid %>% drop_na(hospitalised) # removing na hospitalised data - likely to be 'no' but cant be sure
 
-hospital_covid <- hospital_covid %>% drop_na(hospitalised)
+hospital_covid <- hospital_covid %>% drop_na(died_covid) # removing na from died of covid
 
-hospital_covid <- hospital_covid %>% drop_na(died_covid)
+hospital_covid <- hospital_covid %>% drop_na(confirmed_case) # removing na from died of covid
+
+
+
 #____________________________----
 
 
@@ -57,9 +58,6 @@ covid %>%
   group_by(hospitalised) %>% 
   summarise(n = n()) # quick visualisations
 
-hospital_covid %>% 
-  group_by(gender) %>% 
-  summarise(n = n())
 
 covid%>%
   filter(hospitalised == "Yes") %>%
@@ -71,21 +69,6 @@ covid%>%
   ggplot()+
   geom_bar(aes(x=age))
 
-hospital_covid %>% 
-  ggplot(aes(age))+
-  geom_histogram(bins=50, 
-                 aes(y=..density..,
-                     fill=hospitalised), 
-                 position = "identity",
-                 colour="black") # visualising hospitalisation by age
-
-hospital_covid %>% 
-  ggplot(aes(age))+
-  geom_histogram(bins=50, 
-                 aes(y=..density..,
-                     fill=died_covid), 
-                 position = "identity",
-                 colour="black") # visualising hospitalisation by died from covid
 
 filter(.data = hospital_covid, hospitalised == "Yes") %>%
   ggplot(aes(age))+
@@ -93,16 +76,15 @@ filter(.data = hospital_covid, hospitalised == "Yes") %>%
                  aes(y=..density..,
                      fill=hospitalised), 
                  position = "identity",
-                 colour="black") # visualising only invivduals who were hospitalised
+                 colour="black") # visualising only individuals who were hospitalised
 
-
-filter(.data = hospital_covid, hospitalised == "Yes") %>%
-ggplot(aes(age))+
+filter(.data = hospital_covid) %>%
+  ggplot(aes(age))+
   geom_histogram(bins=50, 
                  aes(y=..density..,
                      fill=died_covid), 
                  position = "identity",
-                 colour="black") # visualising hospitalised individuals who died from covid
+                 colour="black") # visualising whether individuals died from covid
 
 
 filter(.data = hospital_covid, hospitalised == "Yes", died_covid == "Under Review") %>%
@@ -120,6 +102,16 @@ filter(.data = hospital_covid, hospitalised == "Yes", died_covid != "Under Revie
                      fill=died_covid), 
                  position = "identity",
                  colour="black") # visualising data where covid death does not include data 'under review'
+
+
+filter(.data = hospital_covid, hospitalised == "Yes", confirmed_case == "No") %>%
+  summarise(count = n()) # 2 individuals who were hospitalised and did not have a confirmed case of covid
+
+
+
+
+
+
 
 
 #____________________________----
