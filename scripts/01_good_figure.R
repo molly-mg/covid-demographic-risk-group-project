@@ -20,18 +20,16 @@ covid <- rename(covid, "gender" = "case_gender",
 select(.data = covid, 
        age, gender, died_covid, hospitalised) # the variables you want to select
 
-hospital_covid <- select(.data = covid, 
-                       age, gender, hospitalised, died_covid) # selecting data of interest
+hospital_covid <- select(.data = covid, hospitalised, age, gender, died_covid) # selecting data of interest
 
 ## EXPLORING THE VARIABLES ----
 
-glimpse(hospital_covid)
 
 covid %>% 
   group_by(hospitalised) %>% 
   summarise(n = n())
 
-covid %>% 
+hospital_covid %>% 
   group_by(gender) %>% 
   summarise(n = n())
 
@@ -44,8 +42,6 @@ covid%>%
   filter(died_covid == "Yes") %>%
   ggplot()+
   geom_bar(aes(x=age))
-
-
 
 
 
