@@ -9,7 +9,7 @@ source('scripts/clean_data.R')
 
 #_________________________----
 
-# DATA EXPLORATION
+# DATA CLEANING ----
 
 colnames(covid) # visualise all variables in the dataset
 
@@ -17,17 +17,44 @@ covid <- rename(covid, "gender" = "case_gender",
                    "age" = "case_age",
                    "hospitalised"="hospitalized",) # using rename from dplyr to make variables concise
 
+#_________________________----
+
+# DATA EXPLORATION ----
+
 select(.data = covid, 
        age, gender, died_covid, hospitalised) # the variables you want to select
 
 hospital_covid <- select(.data = covid, hospitalised, age, gender, died_covid) # selecting data of interest
 
+#__________________________----
+
 ## EXPLORING THE VARIABLES ----
 
+## Counting NA ----
+
+hospital_covid %>%                                    # Count NA by group
+  dplyr::summarize(count_na = sum(is.na(age)))
+
+hospital_covid %>%                                    # Count NA by group
+  dplyr::summarize(count_na = sum(is.na(died_covid)))
+
+hospital_covid %>%                                    # Count NA by group
+  dplyr::summarize(count_na = sum(is.na(hospitalised)))
+
+hospital_covid %>%                                    # Count NA by group
+  dplyr::summarize(count_na = sum(is.na(gender)))
+
+hospital_covid <- hospital_covid %>% drop_na(hospitalised)
+
+hospital_covid <- hospital_covid %>% drop_na(died_covid)
+#____________________________----
+
+
+# DATA VISUALISATION ----
 
 covid %>% 
   group_by(hospitalised) %>% 
-  summarise(n = n())
+  summarise(n = n()) # quick visualisations
 
 hospital_covid %>% 
   group_by(gender) %>% 
@@ -43,53 +70,19 @@ covid%>%
   ggplot()+
   geom_bar(aes(x=age))
 
+hospital_covid %>% 
+  ggplot(aes(age))+
+  geom_histogram(bins=50, 
+                 aes(y=..density..,
+                     fill=hospitalised), 
+                 position = "identity",
+                 colour="black") # visualising hospitalisation by age
 
+hospital_covid %>% 
+  ggplot(aes(age))+
+  geom_histogram(bins=50, 
+                 aes(y=..density..,
+                     fill=died_covid), 
+                 position = "identity",
+                 colour="black") # visualising hospitalisation by died from covid
 
-
-
-
-
-
-
-
-
-
-
-summarize(
-  group_by(filter(
-    covid, is.na(case_age) == FALSE, is.na(hospitalized) == FALSE
-  ), died, hospitalized),
-  count=n(),
-  avg_age=mean((case_age))
-)
-
-hopsital_covid <- select(.data = covid, case_age, died, died_covid, hospitalized)
-
-ggplot(data = covid, aes(x = hospitalized, y = case_age)) +
-  geom_boxplot(aes(fill = hospitalized),
-               alpha = 0.7, 
-               width = 0.5, # change width of boxplot
-               show.legend = FALSE)
-glimpse(covid)
-
-covid %>% 
-  group_by(case_age) %>% 
-  summarise(n = n())
-  print(n = 80)
-
-prob_obs_age <- covid %>% 
-    group_by(case_age) %>% 
-    summarise(n = n()) %>% 
-    mutate(prob_obs = n/sum(n))
-
-covid %>% 
-  ggplot()+
-  geom_bar(aes(x=case_age))
-
-covid %>% 
-  group_by(case_gender) %>% 
-  summarise(n = n())
-
-covid %>% 
-  summarise(
-    mean_case_age = mean(case_age, na.rm=TRUE))
