@@ -2,6 +2,7 @@
 library(tidyverse)
 library(dplyr)
 library(ggridges)
+library(car)
 #__________________________----
 
 # IMPORT DATA ----
@@ -108,15 +109,37 @@ filter(.data = hospital_covid, hospitalised == "Yes", confirmed_case == "No") %>
   summarise(count = n()) # 2 individuals who were hospitalised and did not have a confirmed case of covid
 
 
-
-
-
-
-
-
 #____________________________----
 
 # EXPLORING DISTRIBUTIONS ----
 
+age_summary <- hospital_covid %>% 
+  summarise(mean_age = mean(age, na.rm=T), 
+            sd = sd(age, na.rm = T),
+            median_age = median(age, na.rm=T), 
+            iqr = IQR(age, na.rm = T)) # looking at the statistical parameters of the age data
 
+age_summary
 
+hospital_covid %>% 
+  ggplot()+
+  geom_histogram(aes(x=age),
+                 alpha=0.8,
+                 bins = 10,
+                 fill="grey",
+                 colour="black")+
+  geom_vline(data=age_summary,
+             aes(xintercept=mean_age),
+             colour="red",
+             linetype="dashed")+
+  geom_vline(data=age_summary,
+             aes(xintercept=median_age),
+             colour="blue",
+             linetype="dashed")+
+  labs(x = "age (years)",
+       y = "count")+
+  theme_classic() # looking at mean and median within the age data
+
+hospital_covid %>% 
+  pull(age) %>% 
+  car::qqPlot() # qqplot to assess deviation from idealised distribution
