@@ -88,8 +88,8 @@ covid %>%
 # From this it is possible to see that cough, headache, 
 # fever, myagalia have the most people with symptoms.
 
-
-## Create tables with the symptoms only. ----
+#______________________________________----
+# Create tables with the symptoms only. ----
 
 filter_cough_sym <- filter(.data = covid, sym_cough == "Yes")
 
@@ -98,6 +98,19 @@ filter_headache_sym <- filter(.data = covid, sym_headache == "Yes")
 filter_fever_sym <- filter(.data = covid, sym_fever == "Yes")
 
 filter_mygalia_sym <- filter(.data = covid, sym_myalgia == "Yes")
+
+
+# Histogram ----
+
+### Cough ----
+
+his_cough <- filter_cough_sym %>%
+  ggplot()+
+  geom_histogram(aes(x=age),
+                 bins=15)+
+  theme_minimal()
+
+plot(his_cough)
 
 
 
