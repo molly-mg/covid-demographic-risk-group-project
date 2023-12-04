@@ -149,6 +149,8 @@ hospital_covid %>%
 
 # STARTING TO FORM PLOTS ----
 
+## Ridges ----
+
 filter(.data = hospital_covid, confirmed_case != "NA") %>%
   ggplot(aes(y = confirmed_case,
              x = age,
@@ -166,6 +168,51 @@ filter(.data = hospital_covid, died_covid != "Under Review") %>%
              x = age,
              fill = died_covid))+ # plot 3 died from covid
   geom_density_ridges() 
+
+
+# bar chart ----
+
+hospital_covid %>% # bar charts to assess count
+  ggplot()+
+  geom_bar(aes(x=age)) # looking at distribution of entire data set
+
+
+filter(.data = hospital_covid, hospitalised == "Yes") %>%
+  ggplot()+
+  geom_bar(aes(x=age)) # dsitribution of individuals who were hospitalised
+
+
+filter(.data = hospital_covid, hospitalised == "Yes", died_covid == "Yes") %>%
+  ggplot()+
+  geom_bar(aes(x=age))# hospitalised and died from covid
+
+
+filter(.data = hospital_covid, confirmed_case == "Yes", hospitalised != "NA", died_covid != "Under Review") %>%
+  ggplot()+
+  geom_bar(aes(x=age))# people who had covid and either were or were not hospitalised and did or did not die
+
+
+hospital_covid %>% # comapring the counts of each outcome of each variable
+  ggplot(aes(x=confirmed_case, fill=confirmed_case))+
+  geom_bar(position=position_dodge())
+
+hospital_covid %>% 
+  ggplot(aes(x=hospitalised, fill=hospitalised))+
+  geom_bar(position=position_dodge())
+
+hospital_covid %>% 
+  ggplot(aes(x=died_covid, fill=died_covid))+
+  geom_bar(position=position_dodge())
+
+
+## more geoms ----
+
+hospital_covid %>%
+ggplot(aes(x = hospitalised, y = age)) +
+  geom_jitter(aes(color = hospitalised),
+              width = 0.1, 
+              alpha = 0.7, 
+              show.legend = FALSE)
 
 
 
