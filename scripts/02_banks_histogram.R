@@ -12,10 +12,10 @@ library(patchwork)
 library(ggplot2)
 
 
-# IMPORT DATA ----
+# Import data ----
 covid <- read_csv ("data/covid_example_data (1).csv")
 
-# CLEAN DATA ----
+# Clean data ----
 covid <- janitor::clean_names(covid) # clean the column names
 
 #Checking for duplicates ----
@@ -25,7 +25,56 @@ covid %>%
   sum() 
 #shows one potential duplicated row
 
-covid[!duplicated(covid$pid),]
+covid[!duplicated(covid$pid),] # remove repated pids
+
+
+covid <- rename(covid,
+                "age"="case_age")
+
+colnames(covid)
+
+
+## Look at what is highest ----
+
+
+covid %>% 
+  group_by(sym_fever)%>%
+  summarise(n=n())
+
+
+covid %>% 
+  group_by(sym_subjfever)%>%
+  summarise(n=n())
+
+covid %>% 
+  group_by(sym_myalgia)%>%
+  summarise(n=n())
+
+covid %>% 
+  group_by(sym_losstastesmell)%>%
+  summarise(n=n())
+
+covid %>% 
+  group_by(sym_sorethroat)%>%
+  summarise(n=n())
+
+
+covid %>% 
+  group_by(sym_cough)%>%
+  summarise(n=n())
+
+covid %>% 
+  group_by(sym_headache)%>%
+  summarise(n=n())
+
+# From this it is possible to see that cough, headache, 
+# fever, myagalia have the most people with symptoms.
+
+
+
+
+
+
 
 
 
