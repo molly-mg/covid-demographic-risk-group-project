@@ -166,3 +166,62 @@ filter(.data = hospital_covid, died_covid != "Under Review") %>%
              x = age,
              fill = died_covid))+ # plot 3 died from covid
   geom_density_ridges() 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Poking about
+
+confirmed_covid <- hospital_covid %>%
+  filter(confirmed_case == "Yes")
+
+
+
+cc_df <- confirmed_covid %>%
+  mutate(graph = "confirmed_case") %>%
+  within(graph_outcome <- confirmed_case)
+
+hosp_df <- confirmed_covid %>%
+  mutate(graph = "hosp") %>%
+  within(graph_outcome <- hospitalised)
+
+dead_df <- confirmed_covid %>%
+  mutate(graph = "dead") %>%
+  within(graph_outcome <- died_covid)
+
+graph_data <- rbind(cc_df, hosp_df) %>%
+  rbind(dead_df) %>% drop_na
+  
+  
+graph_data <- graph_data %>%
+  filter(graph_outcome != "Under Review")
+
+
+graph_data  %>% ggplot(aes(x = age, y = graph)) + 
+  geom_density_ridges(aes(fill = graph_outcome),
+                      colour = "blue",
+                      alpha = 0.8,
+                      bandwidth = 2,
+                      scale=1,
+                      panel_scaling=TRUE)
+  
+## https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html
+dead_df %>%
+  group_by(graph_outcome) %>%
+  summarise(count=n())
+    
