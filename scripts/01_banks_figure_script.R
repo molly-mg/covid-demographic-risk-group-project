@@ -256,3 +256,5 @@ plot(sym_box_plot_none)
 
 sym_six_combined <- sym_box_plot_mygalia / sym_box_plot_cough / sym_box_plot_fever / sym_box_plot_subjfever/sym_box_plot_losstastesmell/ sym_box_plot_sorethroat
 plot(sym_six_combined)
+
+
