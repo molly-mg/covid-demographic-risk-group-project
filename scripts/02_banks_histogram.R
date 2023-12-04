@@ -13,7 +13,7 @@ library(ggplot2)
 
 
 # Import data ----
-covid <- read_csv ("data/covid_example_data (1).csv")
+covid <- read_csv("data/covid_example_data (1).csv")
 
 # Clean data ----
 covid <- janitor::clean_names(covid) # clean the column names
@@ -27,20 +27,38 @@ covid %>%
 
 covid[!duplicated(covid$pid),] # remove repated pids
 
+## Remove Na from pid column ----
 
+covid <- covid %>%
+  drop_na(pid)
+
+
+## Rename variables names ----
 covid <- rename(covid,
                 "age"="case_age")
 
-colnames(covid)
+colnames(covid) # check to makes sure case_age was renamed
+
+
+
+
+## Rename texts in the table ----
+
+covid <- covid %>%
+  mutate(sym_myalgia = case_when(sym_myalgia == "Yes" ~ "Yes",
+                                 sym_myalgia == "YES" ~ "Yes",
+                                 sym_myalgia == "No"~ "No"))
+
+
 
 
 ## Look at what is highest ----
 
 
+
 covid %>% 
   group_by(sym_fever)%>%
   summarise(n=n())
-
 
 covid %>% 
   group_by(sym_subjfever)%>%
@@ -71,12 +89,15 @@ covid %>%
 # fever, myagalia have the most people with symptoms.
 
 
+## Create tables with the symptoms only. ----
 
+filter_cough_sym <- filter(.data = covid, sym_cough == "Yes")
 
+filter_headache_sym <- filter(.data = covid, sym_headache == "Yes")
 
+filter_fever_sym <- filter(.data = covid, sym_fever == "Yes")
 
-
-
+filter_mygalia_sym <- filter(.data = covid, sym_myalgia == "Yes")
 
 
 
