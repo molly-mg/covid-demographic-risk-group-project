@@ -214,12 +214,11 @@ ggplot(aes(x = hospitalised, y = age)) +
               alpha = 0.7, 
               show.legend = FALSE)
 
+## density plots
 
-
-
-
-
-
+filter(.data = hospital_covid, confirmed_case != "NA") %>%
+ggplot(aes(x=age, y=..density..)) + 
+  geom_density(aes(fill=hospitalised), position="stack")
 
 
 
@@ -271,4 +270,3 @@ graph_data  %>% ggplot(aes(x = age, y = graph)) +
 dead_df %>%
   group_by(graph_outcome) %>%
   summarise(count=n())
-    
