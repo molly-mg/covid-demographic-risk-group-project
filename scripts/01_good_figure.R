@@ -221,22 +221,10 @@ ggplot(aes(x=age, y=..density..)) +
   geom_density(aes(fill=hospitalised), position="stack")
 
 
-
-
-
-
-
-
-
-
-
-
-## Poking about
+## my figure
 
 confirmed_covid <- hospital_covid %>%
   filter(confirmed_case == "Yes")
-
-
 
 cc_df <- confirmed_covid %>%
   mutate(graph = "confirmed_case") %>%
@@ -250,12 +238,41 @@ dead_df <- confirmed_covid %>%
   mutate(graph = "dead") %>%
   within(graph_outcome <- died_covid)
 
-graph_data <- rbind(cc_df, hosp_df) %>%
-  rbind(dead_df) %>% drop_na
-  
-  
+#graph_data <- rbind(cc_df, hosp_df) %>%
+#  rbind(dead_df) %>% drop_na
+
+graph_data <- rbind(hosp_df, dead_df) %>% drop_na
+
 graph_data <- graph_data %>%
   filter(graph_outcome != "Under Review")
+
+
+
+  
+graph_data %>% 
+  {
+  ggplot() + 
+    # geom_violin(data = .,
+    #             trim=FALSE,
+    #             scale="count",
+    #             fill="NA",
+    #             aes(x=graph, y=age),
+    #             ) +
+    geom_violin(data = filter(., graph_outcome=="Yes"),
+                trim = FALSE,
+                scale="count",
+                aes(x=graph, y=age, color=graph),
+                )
+}
+
+
+bind_rows(list(atotal=graph_data, subset=filter(graph_data, graph_outcome=="Yes")),
+          .id = "dataset") %>%
+  ggplot(aes(x=graph, y=age, color = dataset)) +
+  geom_violin(position="identity", scale="count")
+  
+
+## Poking about
 
 
 graph_data  %>% ggplot(aes(x = age, y = graph)) + 
@@ -270,3 +287,9 @@ graph_data  %>% ggplot(aes(x = age, y = graph)) +
 dead_df %>%
   group_by(graph_outcome) %>%
   summarise(count=n())
+
+
+
+### More testing
+
+
