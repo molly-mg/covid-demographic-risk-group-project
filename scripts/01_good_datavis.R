@@ -238,10 +238,10 @@ dead_df <- confirmed_covid %>%
   mutate(graph = "dead") %>%
   within(graph_outcome <- died_covid)
 
-#graph_data <- rbind(cc_df, hosp_df) %>%
-#  rbind(dead_df) %>% drop_na
+graph_data <- rbind(cc_df, hosp_df) %>%
+ rbind(dead_df) %>% drop_na
 
-graph_data <- rbind(hosp_df, dead_df) %>% drop_na
+# graph_data <- rbind(hosp_df, dead_df) %>% drop_na
 
 graph_data <- graph_data %>%
   filter(graph_outcome != "Under Review")
@@ -260,7 +260,7 @@ graph_data %>%
     #             ) +
     geom_violin(data = filter(., graph_outcome=="Yes"),
                 trim = FALSE,
-                scale="count",
+                scale="area",
                 aes(x=graph, y=age, color=graph),
                 )
 }
