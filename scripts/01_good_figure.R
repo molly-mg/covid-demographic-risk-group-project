@@ -1,6 +1,7 @@
 # PACKAGES ----
 
 library(tidyverse)
+library(ggplot2)
 
 #_____________________________----
 
@@ -12,19 +13,91 @@ covid <- read_csv ("data/covid_example_data (1).csv") # data imported as 'covid'
 
 # DATA CLEANING ----
 
-covid <- janitor::clean_names(covid) # clean the column names, remove extra spaces
-
-covid <- rename(covid, "age" = "case_age",
-                "hospitalised"="hospitalized",) # using rename from dplyr to make variables concise
-
-covid %>% 
-  distinct() %>%
-  duplicated() %>% 
-  sum() # removing the 1 duplicate observation
+covid <- covid %>%
+  # clean the column names, remove extra spaces
+  janitor::clean_names() %>% 
+  # Renaming variables
+  rename( "age" = "case_age",
+          "hospitalised"="hospitalized",
+          ) %>% 
+  # Remove anyone younger than zero???
+  filter(age >= 0) %>%
+  # Remove duplicates
+  distinct()
+  
 
 ## Selecting Data ----
 
-hospital_covid <- select(.data = covid, age, confirmed_case, hospitalised, died_covid) # selected relevant variables to create figure data set
+outbreak_covid <- select(.data = covid,
+                         age, confirmed_case,
+                         hospitalised, died_covid) # selected relevant variables to create figure data set
+# drop NA here rather than earlier to preserve as much data as can
+outbreak_covid <- outbreak_covid %>% drop_na(age) # drop NA from age - removed 48 observations
 
-hospital_covid <- hospital_covid %>% drop_na(age) # drop NA from age - removed 48 observations
+# FIGURE ----
 
+outbreak_covid_data <- outbreak_covid %>%
+  filter(confirmed_case == "Yes") # creating a new object from which only contains confirmed cases
+
+## Generating three plots from one dataset
+
+confirmed_case_covid_data <- outbreak_covid_data %>%
+  mutate(plot = "Confirmed Cases") %>%
+  mutate(order = 1) %>%
+  within(graph_outcome <- confirmed_case)
+
+hospitalised_covid_data <- outbreak_covid_data %>%
+  filter (hospitalised == "Yes") %>%
+  mutate(plot = "Hospitalisation") %>%
+  mutate(order = 2) %>%
+  within(graph_outcome <- hospitalised)
+
+died_covid_data <- outbreak_covid_data %>%
+  filter (hospitalised == "Yes", died_covid == "Yes") %>%
+  mutate(plot = "Death") %>%
+  mutate(order = 3) %>%
+  within(graph_outcome <- died_covid)
+
+# Combine the three dataframes
+outbreak_figure_data <- rbind(
+  confirmed_case_covid_data, hospitalised_covid_data, died_covid_data) # combining the data into one plot using rbind
+  
+# Order the plots
+outbreak_figure_data <- outbreak_figure_data %>%
+  mutate(plot=fct_reorder(plot, age, .fun=mean, .desc=TRUE))
+
+## Creating violin plot ----
+
+# use of colour to convey severity
+outbreak_covid_data_colours <- c("#00425D", "#00B6FF", "#99E2FF")
+
+outbreak_figure_data %>%
+  
+  ggplot(aes(x=age,
+             y = plot, colour=plot, fill=plot, )) +
+  
+  geom_boxplot(alpha = 0.5,
+               width = 0.25,
+               show.legend = FALSE,
+               outlier.shape=NA)+
+  
+  geom_violin(alpha = 0.2,
+              width = 1,
+              show.legend = FALSE)+
+  
+  scale_colour_manual(values=outbreak_covid_data_colours,
+                      aesthetics = c("colour", "fill")) +
+  
+  theme(legend.position = "none") +
+  
+  labs(x = "Age",
+       y = "",
+       title= "Age-Based Covid Risk",
+       subtitle= "Confirmed Case, Hospitalisation and Death as a result of Covid") +
+  theme_classic()
+
+
+
+## cases are generally spread through the population - more cases in younger people because there are more of them
+## hospitalisation distribution older people have higher covid risk
+## death affected older people the most
