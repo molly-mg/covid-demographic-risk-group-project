@@ -171,6 +171,9 @@ sym_box_plot_losstastesmell <- filter_losstastesmell_sym %>%
   theme(axis.text.y=element_blank() # removes the labelled yes value of y axis
   )
 
+
+
+
 plot(sym_box_plot_losstastesmell)
 
 ### Sorethroat ----
