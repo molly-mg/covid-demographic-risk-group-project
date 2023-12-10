@@ -99,6 +99,29 @@ filter_fever_sym <- filter(.data = covid, sym_fever == "Yes")
 
 filter_mygalia_sym <- filter(.data = covid, sym_myalgia == "Yes")
 
+# Mean and median of age ----
+#Need to calculate this to form the vline on the histograms
+
+covid_age_cough_calculation <- filter_cough_sym %>% 
+  summarise(mean_age_cough = mean(age, na.rm=T), 
+            median_age_cough=median(age, na.rm=T))
+
+#covid_age_cough_calculation
+
+covid_age_headache_calculation <- filter_headache_sym %>% 
+  summarise(mean_age_headache = mean(age, na.rm=T), 
+            median_age_headache=median(age, na.rm=T))
+
+covid_age_mygalia_calculation
+
+covid_age_fever_calculation <- filter_fever_sym %>% 
+  summarise(mean_age_fever = mean(age, na.rm=T), 
+            median_age_fever = median(age, na.rm=T))
+
+covid_age_mygalia_calculation <- filter_mygalia_sym %>% 
+  summarise(mean_age_mygalia = mean(age, na.rm=T), 
+            median_age_mygalia = median(age, na.rm=T))
+
 
 # Histogram ----
 
@@ -107,10 +130,106 @@ filter_mygalia_sym <- filter(.data = covid, sym_myalgia == "Yes")
 his_cough <- filter_cough_sym %>%
   ggplot()+
   geom_histogram(aes(x=age),
-                 bins=15)+
+                 bins=10,
+                 alpha = 0.7,
+                 fill = "#88CCEE",
+                 color = "darkgrey")+
+  geom_vline(data=covid_age_cough_calculation,
+             aes(xintercept=mean_age_cough),
+             color="black",
+             linetype = "longdash")+
+  geom_vline(data=covid_age_cough_calculation,
+             aes(xintercept=median_age_cough),
+             colour="darkorange",
+             linetype = "longdash")+
+  ylim(0,6000)+
+  labs(y="Count",
+       x= "Age (years)")+
   theme_minimal()
 
 plot(his_cough)
 
+## Headache ----
+
+his_headache <- filter_headache_sym %>%
+  ggplot()+
+  geom_histogram(aes(x=age),
+                 bins=10,
+                 alpha = 0.7,
+                 fill = "#117733",
+                 color = "darkgrey")+
+  geom_vline(data=covid_age_headache_calculation,
+             aes(xintercept=mean_age_headache),
+             color="black",
+             linetype = "longdash")+
+  geom_vline(data=covid_age_headache_calculation,
+             aes(xintercept=median_age_headache),
+             colour="darkorange",
+             linetype = "longdash")+
+  ylim(0,6000)+
+  labs(y="Count",
+       x= "Age (years)")+
+  theme_minimal()
+
+plot(his_headache)
+
+colorBlindness::cvdPlot()
 
 
+## Fever ----
+
+
+his_fever <- filter_fever_sym %>%
+  ggplot()+
+  geom_histogram(aes(x=age),
+                 bins=10,
+                 alpha = 0.7,
+                 fill = "#882255",
+                 color = "lightgrey")+
+  geom_vline(data=covid_age_fever_calculation,
+             aes(xintercept=mean_age_fever),
+             color="black",
+             linetype = "longdash")+
+  geom_vline(data=covid_age_fever_calculation,
+             aes(xintercept=median_age_fever),
+             colour="darkorange",
+             linetype = "longdash")+
+  ylim(0,6000)+
+  labs(y="Count",
+       x= "Age (years)")+
+  theme_minimal()
+
+plot(his_fever)
+
+
+## Mygalia ----
+
+his_mygalia <- filter_mygalia_sym %>%
+  ggplot()+
+  geom_histogram(aes(x=age),
+                 bins=10,
+                 alpha = 0.7,
+                 fill = "#332288",
+                 color = "lightgrey")+
+  geom_vline(data=covid_age_mygalia_calculation,
+             aes(xintercept=mean_age_mygalia),
+             color="black",
+             linetype = "longdash")+
+  geom_vline(data=covid_age_mygalia_calculation,
+             aes(xintercept=median_age_mygalia),
+             colour="darkorange",
+             linetype = "longdash")+
+  ylim(0,6000)+
+  labs(y="Count",
+       x= "Age (years)",
+       title= "Mygalia")+
+  theme(title = element_text(hjust = 0.5))+
+  theme_minimal()
+
+
+plot(his_mygalia)
+
+
+joint_plot_sym_hist <- (his_cough|his_headache)/(his_fever|his_mygalia)
+
+joint_plot_sym_hist
