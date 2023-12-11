@@ -213,7 +213,8 @@ his_fever <- filter_fever_sym %>%
              linetype = "longdash")+
   ylim(0,6000)+
   labs(y="Count",
-       x= "Age (years)",)+
+       x= "Age (years)",
+       title="Fever")+
   theme_minimal()+
   theme(plot.title.position = 'plot', 
         plot.title = element_text(hjust = 0.5))
@@ -252,3 +253,7 @@ plot(his_mygalia)
 joint_plot_sym_hist <- (his_cough|his_headache)/(his_fever|his_mygalia)
 
 joint_plot_sym_hist
+
+joint_plot_sym_hist + plot_annotation(
+  title = "Number of people with covid symptoms by age"
+)
