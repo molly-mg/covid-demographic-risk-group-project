@@ -33,9 +33,20 @@ covid <- covid %>%
   drop_na(pid)
 
 
+covid <- covid %>%
+  # clean the column names, remove extra spaces
+  janitor::clean_names() %>% 
+  # Renaming variables
+  rename( "age" = "case_age",
+          "hospitalised"="hospitalized",
+  ) %>% 
+  # Remove anyone younger than zero???
+  filter(age >= 0) %>%
+  # Remove duplicates
+  distinct()
+
 ## Rename variables names ----
-covid <- rename(covid,
-                "age"="case_age")
+
 
 colnames(covid) # check to makes sure case_age was renamed
 
@@ -144,8 +155,11 @@ his_cough <- filter_cough_sym %>%
              linetype = "longdash")+
   ylim(0,6000)+
   labs(y="Count",
-       x= "Age (years)")+
-  theme_minimal()
+       x= "Age (years)",
+       title = "Cough")+
+  theme_minimal()+
+  theme(plot.title.position = 'plot', 
+        plot.title = element_text(hjust = 0.5))
 
 plot(his_cough)
 
@@ -168,8 +182,11 @@ his_headache <- filter_headache_sym %>%
              linetype = "longdash")+
   ylim(0,6000)+
   labs(y="Count",
-       x= "Age (years)")+
-  theme_minimal()
+       x= "Age (years)",
+       title="Headache")+
+  theme_minimal()+
+  theme(plot.title.position = 'plot', 
+        plot.title = element_text(hjust = 0.5))
 
 plot(his_headache)
 
@@ -196,8 +213,10 @@ his_fever <- filter_fever_sym %>%
              linetype = "longdash")+
   ylim(0,6000)+
   labs(y="Count",
-       x= "Age (years)")+
-  theme_minimal()
+       x= "Age (years)",)+
+  theme_minimal()+
+  theme(plot.title.position = 'plot', 
+        plot.title = element_text(hjust = 0.5))
 
 plot(his_fever)
 
@@ -223,9 +242,9 @@ his_mygalia <- filter_mygalia_sym %>%
   labs(y="Count",
        x= "Age (years)",
        title= "Mygalia")+
-  theme(title = element_text(hjust = 0.5))+
-  theme_minimal()
-
+  theme_minimal()+
+  theme(plot.title.position = 'plot', 
+        plot.title = element_text(hjust = 0.5))
 
 plot(his_mygalia)
 
