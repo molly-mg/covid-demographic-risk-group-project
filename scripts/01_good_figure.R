@@ -24,7 +24,8 @@ covid <- covid %>%
   filter(age >= 0) %>%
   # Remove duplicates
   distinct()
-  
+
+#_____________________________----
 
 ## Selecting Data ----
 
