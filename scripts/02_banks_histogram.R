@@ -112,7 +112,7 @@ covid_age_headache_calculation <- filter_headache_sym %>%
   summarise(mean_age_headache = mean(age, na.rm=T), 
             median_age_headache=median(age, na.rm=T))
 
-covid_age_mygalia_calculation
+#covid_age_mygalia_calculation
 
 covid_age_fever_calculation <- filter_fever_sym %>% 
   summarise(mean_age_fever = mean(age, na.rm=T), 
