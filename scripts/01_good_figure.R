@@ -72,7 +72,7 @@ outbreak_figure_data <- outbreak_figure_data %>%
 # use of colour to convey severity
 outbreak_covid_data_colours <- c("#00425D", "#00B6FF", "#99E2FF")
 
-outbreak_figure_data %>%
+age_based_covid <- outbreak_figure_data %>%
   
   ggplot(aes(x=age,
              y = plot, colour=plot, fill=plot, )) +
@@ -96,7 +96,6 @@ outbreak_figure_data %>%
        title= "Age-Based Covid Risk",
        subtitle= "Confirmed Case, Hospitalisation and Death as a result of Covid") +
   theme_classic()
-
 
 
 ## cases are generally spread through the population - more cases in younger people because there are more of them
