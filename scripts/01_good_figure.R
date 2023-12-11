@@ -2,6 +2,7 @@
 
 library(tidyverse)
 library(ggplot2)
+library(colorBlindness)
 
 #_____________________________----
 
@@ -70,7 +71,7 @@ outbreak_figure_data <- outbreak_figure_data %>%
 ## Creating violin plot ----
 
 # use of colour to convey severity
-outbreak_covid_data_colours <- c("#00425D", "#00B6FF", "#99E2FF")
+outbreak_covid_data_colours <- c("#083b19", "#117733", "#b7d6c1")
 
 age_based_covid <- outbreak_figure_data %>%
   
@@ -97,6 +98,9 @@ age_based_covid <- outbreak_figure_data %>%
        subtitle= "Confirmed Case, Hospitalisation and Death as a result of Covid") +
   theme_classic()
 
+plot(age_based_covid)
+
+ 
 
 ## cases are generally spread through the population - more cases in younger people because there are more of them
 ## hospitalisation distribution older people have higher covid risk
