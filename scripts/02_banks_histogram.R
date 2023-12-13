@@ -134,6 +134,8 @@ covid_age_mygalia_calculation <- filter_mygalia_sym %>%
             median_age_mygalia = median(age, na.rm=T))
 
 
+covid_age_cough_calculation
+
 # Histogram ----
 
 ### Cough ----
@@ -257,3 +259,14 @@ joint_plot_sym_hist
 joint_plot_sym_hist + plot_annotation(
   title = "Number of people with a covid symptom by age"
 )
+
+
+
+## The graphs show a general pattern of more younger people displaying the four most common symptoms of covid.
+## Headache symptoms display a greater number of under 35s getting it.
+## The mean age for headache was 37.8 and a median of 35. This is around a year or two younger than the other symptoms.
+## Cough shows the highest mean, with the average person getting this symptom being 41. 
+## Coughing is also the most common symptom so people with a greater risk from covid should avoid those who are coughing.
+## Older people should be aware of these common symptoms as the largest reason for younger people displaying them is that there are more of them getting covid.
+## Identifying these common diseases soon after a person has been exposed to covid could be used to help young and more vulnerable people seek different treatment before requiring hospital.
+## Or at the very least be prepared for the chance that they might have it.
