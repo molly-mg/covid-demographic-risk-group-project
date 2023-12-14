@@ -1,5 +1,5 @@
 ---
-title: "Testing Rmarkdown"
+title: "Age Based Symptoms and Outcomes in Covid-19 Patients"
 author: "Isobel Banks, Molly Good and Vaidotas Selenkovas"
 date: "2023-12-11"
 output: pdf_document
