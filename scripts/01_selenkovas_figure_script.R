@@ -4,6 +4,7 @@
 library(tidyverse) # tidy data packages
 library(janitor) # cleans variable names
 library(lubridate) # makes sure dates are processed properly
+library(rstatix)
 
 
 #__________________________----

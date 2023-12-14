@@ -29,7 +29,6 @@ new_covid %>% ggplot(
                alpha = 0.2)
 
 
-library(rstatix)
 
 new_covid %>% 
   rstatix::cor_test(new_age_years, duration_hosp_days)
