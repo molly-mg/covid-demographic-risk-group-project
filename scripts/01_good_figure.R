@@ -100,12 +100,7 @@ age_based_covid <- outbreak_figure_data %>%
 
 plot(age_based_covid)
 
- 
+# OUTPUT FIGURE TO FILE
 
-## cases are generally spread through the population - more cases in younger people because there are more of them
-## hospitalisation distribution older people have higher covid risk
-## death affected older people the most
 
-## Cases are distributed across the population with with incidence higher in younger people due to high concentration in the populatio
-## Hospitalisation effects older people but is fairly evenly distributed across the population
-## death affects older people disproportionately with the mean being in their late 70's and hardly anoyone below 50
+
