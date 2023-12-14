@@ -50,13 +50,13 @@ confirmed_case_covid_data <- outbreak_covid_data %>%
 
 hospitalised_covid_data <- outbreak_covid_data %>%
   filter (hospitalised == "Yes") %>%
-  mutate(plot = "Hospitalisation") %>%
+  mutate(plot = "Hospitalisations") %>%
   mutate(order = 2) %>%
   within(graph_outcome <- hospitalised)
 
 died_covid_data <- outbreak_covid_data %>%
   filter (hospitalised == "Yes", died_covid == "Yes") %>%
-  mutate(plot = "Death") %>%
+  mutate(plot = "Deaths") %>%
   mutate(order = 3) %>%
   within(graph_outcome <- died_covid)
 

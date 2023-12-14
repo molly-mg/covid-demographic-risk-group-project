@@ -42,3 +42,17 @@ source("scripts/01_good_figure.R")
 plot(age_based_covid)
 
 ```
+
+
+```{r source-selenkovas, echo = FALSE, include= FALSE, warning = FALSE, message = FALSE}
+
+source("scripts/02_selenkovas_visualisations.R")
+
+```
+
+
+```{r figure-selenkovas, echo = FALSE, warning = FALSE, message = FALSE}
+
+plot(hospitalisation_figure)
+
+```

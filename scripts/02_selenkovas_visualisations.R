@@ -7,39 +7,32 @@ source("scripts/01_selenkovas_figure_script.R")
 
 #__________________________----
 
-age_summary <- new_covid$age %>% mutate(mean_age = mean(age))
 
-new_covid %>% ggplot(
-  aes(x = new_age_years,
-      y = duration_hosp_days)) +
-  geom_point() +
-  geom_smooth() + 
-  coord_flip() +
-  geom_boxplot(aes(y = new_age_years, fill = hospitalized_status), 
-               alpha = 0.2)
+# FINDING STATISTICS----
 
+stats_covid <- tibble(median_age = median(.data = new_covid, new_covid$new_age_years))
 
-new_covid %>% ggplot(
-  aes(x = new_age_years,
-      y = duration_hosp_days)) +
-  geom_point() +
-  geom_smooth() + 
-  ylim(0,14) +
-  geom_boxplot(aes(y = new_age_years, fill = hospitalized_status), 
-               alpha = 0.2)
+under_median_age <- tibble(filter(select(new_covid, new_age_years, duration_hosp_days), new_covid$new_age_years < stats_covid$median_age))
 
+over_median_age <- tibble(filter(select(new_covid, new_age_years, duration_hosp_days), new_covid$new_age_years > stats_covid$median_age))
 
-library(rstatix)
+stats_covid <- mutate(stats_covid, 
+                      average_stay_under = mean(under_median_age$duration_hosp_days), 
+                      average_stay_over = mean((over_median_age$duration_hosp_days)))
 
-new_covid %>% 
-  rstatix::cor_test(new_age_years, duration_hosp_days)
-# cor coefficient is positive but low; this means the linear correlation is weak 
+stay_per_age <- new_covid %>% ggplot(aes(x = new_age_years, 
+                                         y = duration_hosp_days)) + 
+  geom_point() + 
+  geom_smooth()
 
-new_covid %>% select(new_age_years, 
-                    duration_hosp_days) %>% 
-  mutate(rank_age = dense_rank((new_age_years)), 
-         rank_duration_hosp_days = dense_rank((duration_hosp_days))) %>% 
-  head()
+patients_per_age <- new_covid %>% ggplot(aes(x = new_age_years)) +
+  geom_histogram(binwidth = 1) +
+  geom_density(aes(y = after_stat(count))) + 
+  geom_vline(data = stats_covid,
+             aes(xintercept = median_age), 
+             colour="red", 
+             linetype="dashed")
+  
 
-new_covid %>% 
-  rstatix::cor_test(new_age_years, duration_hosp_days, method="spearman")
+hospitalisation_figure <- stay_per_age + patients_per_age + plot_layout(guides = "collect")
+
