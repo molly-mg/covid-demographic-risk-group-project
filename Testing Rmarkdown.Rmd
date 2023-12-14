@@ -7,13 +7,13 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## Symptoms and age of the patients
+# Symptoms and age of the patients
 ```{r source_banks, include= FALSE}
 source("scripts/02_banks_histogram.R")
 ```
 ```{r sym_histogram, echo=FALSE, warning=FALSE}
 
-joint_plot_sym_hist
+joint_plot_sym_hist_title
 
 ```
 
@@ -25,11 +25,12 @@ source("scripts/01_good_figure.R")
 ```
 
 
-```{r boxplot_good, echo=FALSE}
+```{r boxplot_good, echo=FALSE, fig.asp=0.8, fig.width=4.5}
 
 plot(age_based_covid)
 
 ```
+
 Confirmed cases of covid-19 were spread throughout the population with a greater incidence of cases in younger people because they contribute a larger proportion of the population. Mean hospitalisation age was older than the mean age of confirmed case. Outcome of death was skewed disproportionately towards the older population therefore it can be summised that covid-19-based risk increases with age.
 
 ```{r source-selenkovas, echo = FALSE, include= FALSE, warning = FALSE, message = FALSE}
