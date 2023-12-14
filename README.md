@@ -62,3 +62,4 @@ patchwork)
 ggplot2
 rstatix
 ggridges
+car
