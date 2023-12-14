@@ -27,10 +27,12 @@ stay_per_age <- new_covid %>% ggplot(aes(x = new_age_years,
 
 patients_per_age <- new_covid %>% ggplot(aes(x = new_age_years)) +
   geom_histogram(binwidth = 1) +
-  geom_density(aes(y=..count..)) + 
+  geom_density(aes(y = after_stat(count))) + 
   geom_vline(data = stats_covid,
              aes(xintercept = median_age), 
              colour="red", 
              linetype="dashed")
+  
 
-stay_per_age + patients_per_age + plot_layout(guides = "collect")
+hospitalisation_figure <- stay_per_age + patients_per_age + plot_layout(guides = "collect")
+
