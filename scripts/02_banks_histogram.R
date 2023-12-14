@@ -257,10 +257,10 @@ joint_plot_sym_hist <- (his_cough|his_headache)/(his_fever|his_mygalia)
 joint_plot_sym_hist
 
 joint_plot_sym_hist_title <- joint_plot_sym_hist + plot_annotation(
-  title = "Number of people with a covid symptom by age"
+  title = "Number of people with covid symptoms by age"
 )
 
-
+joint_plot_sym_hist_title
 
 ## The graphs show a general pattern of more younger people displaying the four most common symptoms of covid.
 ## Headache symptoms display a greater number of under 35s getting it.
