@@ -100,7 +100,4 @@ age_based_covid <- outbreak_figure_data %>%
 
 plot(age_based_covid)
 
-# OUTPUT FIGURE TO FILE
-
-
 
