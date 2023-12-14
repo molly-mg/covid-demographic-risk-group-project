@@ -95,7 +95,7 @@ age_based_covid <- outbreak_figure_data %>%
   labs(x = "Age",
        y = "",
        title= "Age-Based Covid Risk",
-       subtitle= "Confirmed Case, Hospitalisation and Death as a result of Covid") +
+       subtitle= "Confirmed Case, Hospitalisation and Death") +
   theme_classic()
 
 plot(age_based_covid)
