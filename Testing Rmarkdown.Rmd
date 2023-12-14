@@ -29,7 +29,7 @@ source("scripts/01_good_figure.R")
 plot(age_based_covid)
 
 ```
-
+Confirmed cases of covid-19 were spread throughout the population with a greater incidence of cases in younger people because they contribute a larger proportion of the population. Mean hospitalisation age was older than the mean age of confirmed case. Outcome of death was skewed disproportionately towards the older population therefore it can be summised that covid-19-based risk increases with age.
 
 ```{r source-selenkovas, echo = FALSE, include= FALSE, warning = FALSE, message = FALSE}
 
