@@ -4,33 +4,20 @@ author: "Isobel Banks, Molly Good and Vaidotas Selenkovas"
 date: "2023-12-11"
 output: pdf_document
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## R Markdown 
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-```{r, include= FALSE}
+## Symptoms and age of the patients
+```{r source_banks, include= FALSE}
 source("scripts/02_banks_histogram.R")
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
 ```{r sym_histogram, echo=FALSE, warning=FALSE}
 
 joint_plot_sym_hist
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-
-
+The graph shows a general pattern of younger people displaying the four most common symptoms of covid. Headache symptoms display a greater number of under 35s getting it. The mean age for headache was 37.8 and a median of 35. This is around a year or two younger than the other symptoms. Cough shows the highest mean, with the average person getting this symptom being 41.Coughing is also the most common symptom so people with a greater risk from covid should avoid those who are coughing.Older people should be aware of these common symptoms as the largest reason for younger people displaying them is that there are more of them getting covid.Identifying these common diseases soon after a person has been exposed to covid could be used to help young and more vulnerable people seek different treatment before requiring hospital. Or at the very least be prepared for the chance that they might have it.
 ```{r source_good, include= FALSE}
 source("scripts/01_good_figure.R")
 
