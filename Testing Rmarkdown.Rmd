@@ -23,8 +23,7 @@ The graph shows a general pattern of younger people displaying the four most com
 source("scripts/01_good_figure.R")
 
 ```
-
-
+# Hospitalisation and Death by Age
 ```{r boxplot_good, echo=FALSE, fig.asp=0.8, fig.width=4.5}
 
 plot(age_based_covid)
