@@ -3,10 +3,30 @@
 Summative group assignment for module BIO 5023Y - Data Science for Biologists.
 
 ## Data
-
 The data is a fake version of a covid linelist a data format for collecting case numbers and information for epidemiology. This data was originally provided by Batra, Neale et al. (2021), The Epidemiologist R Handbook. https://zenodo.org/badge/doi/10.5281/zenodo.4752646.svg
 
-### Variables
+## Our project
+A report into a recent covid outbreak for the purposes of informing health policy. The data is in linelist format.
+We have chosen to focus on age as the key factor against other variables.
+
+## 'How to' guide
+Scripts for each final figure can be found in the 'figures' folder. 
+The data visualisation folder contains experimental data visualisation. 
+The final Rmarkdown file is contained within the project folder.
+Final Rmarkdown file can be knit to view the full report.
+
+## Packages
+* usethis
+* tidyverse 
+* janitor
+* lubridate
+* colorBlindness
+* patchwork
+* ggplot2
+* rstatix
+* car
+
+## Variables
 
 | Variable| Definition|
 |----|----|
@@ -35,24 +55,3 @@ The data is a fake version of a covid linelist a data format for collecting case
 | died_dt_FALSE| Date of death
 | confirmed_case| Confirmed case of COVID-19
 | pos_sampledt_FALSE| Date of positive PCR test
-
-## Our project
-A report into a recent covid outbreak for the purposes of informing health policy. The data is in linelist format.
-We have chosen to focus on age as the key factor against other variables.
-
-## 'How to' guide
-Scripts for each final figure can be found in the 'figures' folder. 
-The data visualisation folder contains experimental data visualisation. 
-The final Rmarkdown file is contained within the project folder.
-Final Rmarkdown file can be knit to view the full report.
-
-## Packages
-* usethis
-* tidyverse 
-* janitor
-* lubridate
-* colorBlindness
-* patchwork
-* ggplot2
-* rstatix
-* car
