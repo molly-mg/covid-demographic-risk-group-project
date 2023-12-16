@@ -2,22 +2,6 @@
 
 Summative group assignment for module BIO 5023Y - Data Science for Biologists.
 
-## Project description
-
-This is a group assignment for students taking BIO 5023Y. With a csv-formatted COVID-19 linelist, use this data to create an outbreak situation report (maximum two pages) that addresses any topics or trends that are deemed relevant to inform an audience of public health and medical responders. 
-
-Students are responsible for:
-
-* Checking the dataset for errors or mistakes
-
-* Check that all columns are identified with the correct variable type
-
-* Conduct exploratory data analysis to identify topics or trends of importance
-
-* Produce one summary figure per person in the group - each figure should be appropriate for the intended audience and may contain annotations or labels to aid explanation. Any requisite summary text to provide context or aid understanding should be included in the final report
-
-* Combine all figures with explanatory text into a short (2-page maximum) report compiled with Rmarkdown to be presented at a weekly situation update meeting attended by public health officials and medical responders
-
 ## Data
 
 The data is a fake version of a covid linelist a data format for collecting case numbers and information for epidemiology. This data was originally provided by Batra, Neale et al. (2021), The Epidemiologist R Handbook. https://zenodo.org/badge/doi/10.5281/zenodo.4752646.svg
@@ -51,6 +35,16 @@ The data is a fake version of a covid linelist a data format for collecting case
 | died_dt_FALSE| Date of death
 | confirmed_case| Confirmed case of COVID-19
 | pos_sampledt_FALSE| Date of positive PCR test
+
+## Our project
+A report into a recent covid outbreak for the purposes of informing health policy. The data is in linelist format.
+We have chosen to focus on age as the key factor against other variables.
+
+## 'How to' guide
+Scripts for each final figure can be found in the 'figures' folder. 
+The data visualisation folder contains experimental data visualisation. 
+The final Rmarkdown file is contained within the project folder.
+Final Rmarkdown file can be knit to view the full report.
 
 ## Packages
 * usethis
