@@ -53,13 +53,12 @@ The data is a fake version of a covid linelist a data format for collecting case
 | pos_sampledt_FALSE| Date of positive PCR test
 
 ## Packages
-usethis
-tidyverse 
-janitor
-lubridate
-colorBlindness
-patchwork)
-ggplot2
-rstatix
-ggridges
-car
+* usethis
+* tidyverse 
+* janitor
+* lubridate
+* colorBlindness
+* patchwork
+* ggplot2
+* rstatix
+* car
