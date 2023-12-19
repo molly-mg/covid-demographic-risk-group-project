@@ -10,8 +10,9 @@ A report into a recent covid outbreak for the purposes of informing health polic
 We have chosen to focus on age as the key factor against other variables.
 
 ## 'How to' guide
-Scripts for each final figure can be found in the 'figures' folder. 
+Scripts for each final figure can be found in the 'scripts' folder. 
 The data visualisation folder contains experimental data visualisation. 
+The figure folder contains the png of the final figures used in the report
 The final Rmarkdown file is contained within the project folder.
 Final Rmarkdown file can be knit to view the full report.
 
