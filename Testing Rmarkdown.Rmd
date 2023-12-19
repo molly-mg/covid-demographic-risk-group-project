@@ -34,12 +34,12 @@ Confirmed cases of covid-19 were spread throughout the population with a greater
 
 ```{r source-selenkovas, echo = FALSE, include= FALSE, warning = FALSE, message = FALSE}
 
-source("scripts/02_selenkovas_visualisations.R")
+source("scripts/data visualisations/02_selenkovas_visualisations.R")
 
 ```
 
 
-```{r figure-selenkovas, echo = FALSE, warning = FALSE, message = FALSE}
+```{r figure-selenkovas, echo = FALSE, warning = FALSE, message = FALSE, fig.asp=0.8, fig.width=4.5}
 
 plot(hospitalisation_figure)
 
