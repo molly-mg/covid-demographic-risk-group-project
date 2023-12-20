@@ -1,0 +1,46 @@
+---
+title: "Age Based Symptoms and Outcomes in Covid-19 Patients"
+author: "Isobel Banks, Molly Good and Vaidotas Selenkovas"
+date: "2023-12-11"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Symptoms and age of the patients
+```{r source_banks, include= FALSE}
+source("scripts/02_banks_histogram.R")
+```
+```{r sym_histogram, echo=FALSE, warning=FALSE}
+
+joint_plot_sym_hist_title
+
+```
+
+The graph shows a general pattern of younger people displaying the four most common symptoms of covid. Headache symptoms display a greater number of under 35s getting it. This is around a year or two younger than the other symptoms. Cough shows the highest mean, with the average person getting this symptom being 41. Coughing is also the most common symptom so people with a greater risk from covid should avoid those who are coughing. Older and vulnerable people should be aware of the commom symptoms so they can identify if they have been exposed to covid. Which could allow them to seek different treatment before requiring hospital.
+
+```{r source_good, include= FALSE}
+source("scripts/01_good_figure.R")
+
+```
+# Hospitalisation and Death by Age
+```{r boxplot_good, echo=FALSE, fig.asp=0.8, fig.width=4.5}
+
+plot(age_based_covid)
+
+```
+
+Confirmed cases of covid-19 were spread throughout the population with a greater incidence of cases in younger people because they contribute a larger proportion of the population. Mean hospitalisation age was older than the mean age of confirmed case. Outcome of death was skewed disproportionately towards the older population therefore it can be summised that covid-19-based risk increases with age.
+
+```{r source-selenkovas, echo = FALSE, include= FALSE, warning = FALSE, message = FALSE}
+
+source("scripts/data visualisations/02_selenkovas_visualisations.R")
+
+```
+
+
+```{r figure-selenkovas, echo = FALSE, warning = FALSE, message = FALSE, fig.asp=0.8, fig.width=4.5}
+
+plot(hospitalisation_figure)
+
+```

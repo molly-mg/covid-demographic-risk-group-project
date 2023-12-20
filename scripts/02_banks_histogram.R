@@ -59,7 +59,7 @@ covid <- covid %>%
   mutate(sym_myalgia = case_when(sym_myalgia == "Yes" ~ "Yes",
                                  sym_myalgia == "YES" ~ "Yes",
                                  sym_myalgia == "No"~ "No"))
-
+#One of the symptoms has a captial YES so renamed to Yes to apply consistency across the board.
 
 
 
@@ -137,6 +137,7 @@ covid_age_mygalia_calculation <- filter_mygalia_sym %>%
 covid_age_cough_calculation
 
 # Histogram ----
+#Creating the histograms for the symptoms
 
 ### Cough ----
 
@@ -251,16 +252,16 @@ his_mygalia <- filter_mygalia_sym %>%
 
 plot(his_mygalia)
 
-
+## Joining figures together -----
 joint_plot_sym_hist <- (his_cough|his_headache)/(his_fever|his_mygalia)
 
 joint_plot_sym_hist
 
-joint_plot_sym_hist + plot_annotation(
-  title = "Number of people with a covid symptom by age"
+joint_plot_sym_hist_title <- joint_plot_sym_hist + plot_annotation(
+  title = "Number of people with covid symptoms by age"
 )
-
-
+#Adding title to the patchwork figure
+joint_plot_sym_hist_title
 
 ## The graphs show a general pattern of more younger people displaying the four most common symptoms of covid.
 ## Headache symptoms display a greater number of under 35s getting it.
