@@ -33,32 +33,32 @@ colnames(covid)
 # renaming variables to conform to snake_case
 # new names chosen to have as few matches in their first characters as possible while still be descriptive
 covid <- dplyr::rename(covid,
-                          "pid" = "PID",
-                          "case_reported" = "reprt_creationdt_FALSE", 
-                          "dob" = "case_dob_FALSE",
-                          "age" = "case_age",
-                          "gender" = "case_gender",
-                          "race" = "case_race",
-                          "ethnicity" = "case_eth",
-                          "zip_code" = "case_zip",
-                          "sym_status" = "Contact_id",
-                          "date_sym_start" = "sym_startdt_FALSE",
-                          "fever" = "sym_fever",
-                          "fever_self_report" = "sym_subjfever",
-                          "myalgia" = "sym_myalgia",
-                          "taste_smell" = "sym_losstastesmell",
-                          "sorethroat" = "sym_sorethroat",
-                          "cough" = "sym_cough",
-                          "headache" = "sym_headache",
-                          "date_sym_resolved" = "sym_resolveddt_FALSE",
-                          "lives_with_others" = "contact_household",
-                          "hospitalized_status" = "hospitalized",
-                          "admission_date" = "hosp_admidt_FALSE",
-                          "discharge_date" = "hosp_dischdt_FALSE",
-                          "died_of_covid" = "died_covid",
-                          "date_of_death" = "died_dt_FALSE",
-                          "covid_confirmed" = "confirmed_case",
-                          "positive_pcr_date" = "pos_sampledt_FALSE")
+                       "pid" = "PID",
+                       "case_reported" = "reprt_creationdt_FALSE", 
+                       "dob" = "case_dob_FALSE",
+                       "age" = "case_age",
+                       "gender" = "case_gender",
+                       "race" = "case_race",
+                       "ethnicity" = "case_eth",
+                       "zip_code" = "case_zip",
+                       "sym_status" = "Contact_id",
+                       "date_sym_start" = "sym_startdt_FALSE",
+                       "fever" = "sym_fever",
+                       "fever_self_report" = "sym_subjfever",
+                       "myalgia" = "sym_myalgia",
+                       "taste_smell" = "sym_losstastesmell",
+                       "sorethroat" = "sym_sorethroat",
+                       "cough" = "sym_cough",
+                       "headache" = "sym_headache",
+                       "date_sym_resolved" = "sym_resolveddt_FALSE",
+                       "lives_with_others" = "contact_household",
+                       "hospitalized_status" = "hospitalized",
+                       "admission_date" = "hosp_admidt_FALSE",
+                       "discharge_date" = "hosp_dischdt_FALSE",
+                       "died_of_covid" = "died_covid",
+                       "date_of_death" = "died_dt_FALSE",
+                       "covid_confirmed" = "confirmed_case",
+                       "positive_pcr_date" = "pos_sampledt_FALSE")
 
 # checking that all variables were renamed
 colnames(covid)
@@ -110,13 +110,13 @@ new_covid <- new_covid %>%
 # Making two new variables
 new_covid <- new_covid %>%
   mutate(new_age_years = (admission_date - dob)/lubridate::dyears(1), # Age at admission
-         duration_hosp_days = discharge_date - admission_date) # Duration of hospitalisation
+         duration_hosp_weeks = (discharge_date - admission_date)/lubridate::dweeks(1)) # Duration of hospitalisation
 
 # Checking variable types
 glimpse(new_covid)
 
 # Changing difftime variables to num
-new_covid$duration_hosp_days <- as.numeric(new_covid$duration_hosp_days)
+new_covid$duration_hosp_weeks <- as.numeric(new_covid$duration_hosp_weeks)
 
 # Checking variable type
 glimpse(new_covid)
@@ -132,14 +132,14 @@ new_covid <- new_covid %>%
 # A scatter plot to visually check data
 new_covid %>% ggplot(
   aes(x = new_age_years,
-      y = duration_hosp_days)) +
+      y = duration_hosp_weeks)) +
   geom_point()
 # !!!There are input errors in the original data for admission and/or discharge dates
 
 # Removing input errors
 new_covid <- new_covid %>%
-  filter(new_covid$duration_hosp_days >= 0, # all values less than 0
-         new_covid$duration_hosp_days < 2000) # values more than 2000
+  filter(new_covid$duration_hosp_weeks >= 0, # all values less than 0
+         new_covid$duration_hosp_weeks < 2000) # values more than 2000
 
 # Summary to check for any more input errors
 summary(new_covid)
@@ -147,5 +147,5 @@ summary(new_covid)
 # A scatter plot to visually check data
 new_covid %>% ggplot(
   aes(x = new_age_years,
-      y = duration_hosp_days)) +
+      y = duration_hosp_weeks)) +
   geom_point()

@@ -33,16 +33,21 @@ new_covid %>% ggplot(
               colour = "#332288",
               linewidth = 1.5,
               lty = "dashed") + 
+  geom_label(aes(x = 10, y = 20,
+                label = "There were no deaths \n of hospitalised children under 17"),
+            size = 2.5,
+            colour = "black",
+            fill = alpha(c("white"), 0.5)) + 
   guides(colour = guide_legend(title = "Did the patient die?")) + 
   labs(x = "Age",
-       y = "Duration of stay",
+       y = "Duration of stay (days)",
        title = "Duration of hospitalisation of patients with COVID-19",
-       subtitle = "Effects of patient's age on the duration and outcomes of their stay") +
+       subtitle = "Effects of patient's age on the duration and outcomes of their hospitalisation") +
   theme_minimal() +
   theme(axis.line = element_line(colour = "black", 
                                  size = 0.5, linetype = "solid"),
-        plot.title = element_text(size = 24),
-        plot.subtitle = element_text(size = 16),
+        plot.title = element_text(size = 16),
+        plot.subtitle = element_text(size = 12),
         legend.position = c(0.9, 0.9),
         legend.background = element_rect(colour = "black")) + 
   scale_x_continuous(expand = c(0, 0), breaks = seq(0, 120, by = 10)) +
