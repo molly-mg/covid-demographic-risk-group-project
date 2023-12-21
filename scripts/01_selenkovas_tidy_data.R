@@ -1,5 +1,3 @@
-# is there a relationship between age and duration of hospitalisations? if there is a relationship, does it change for people who died?s
-
 # PACKAGES ----
 
 
@@ -8,7 +6,7 @@ library(janitor) # cleans variable names
 library(lubridate) # makes sure dates are processed properly
 library(rstatix)
 library(patchwork)
-
+library(colorBlindness)
 
 #__________________________----
 
@@ -65,6 +63,10 @@ covid <- dplyr::rename(covid,
 # checking that all variables were renamed
 colnames(covid)
 
+
+# WRANGLING DATA----
+
+
 # checking for distinct observations in hospitalized_status
 covid %>% distinct(hospitalized_status) 
 
@@ -115,9 +117,10 @@ new_covid <- new_covid %>%
 # Checking variable types
 glimpse(new_covid)
 
-# Making a new variable
+# Making two new variables
 new_covid <- new_covid %>%
-  mutate(duration_hosp_days = discharge_date - admission_date) # Duration of hospitalisation
+  mutate(new_age_years = (admission_date - dob)/lubridate::dyears(1), # Age at admission
+         duration_hosp_days = discharge_date - admission_date) # Duration of hospitalisation
 
 # Checking variable types
 glimpse(new_covid)
@@ -128,17 +131,38 @@ summary(new_covid)
 # Removing extreme values
 new_covid <- new_covid %>%
   filter(new_covid$duration_hosp_days >= 0, # all values less than 0
-         new_covid$duration_hosp_days < 2000) # values more than 2000
+         new_covid$duration_hosp_days < 2000,
+         new_covid$new_age_years >= 0)
 
 covid_colours <- c("#117733", "#882255")
 
 new_covid %>% ggplot(
-  aes(x = age,
+  aes(x = new_age_years,
       y = duration_hosp_days)) +
-  geom_point(aes(colour = died_of_covid), alpha = 0.5) +
-  geom_smooth(aes(colour = died_of_covid), method = "gam", se = FALSE) + 
-  scale_colour_manual(values = covid_colours, aesthetics = "colour") + 
-  geom_smooth(method = "lm", se = FALSE, fill = "#332288")
+  geom_point(aes(fill = died_of_covid),
+             shape = 21,
+             colour = "black",
+             size = 2,
+             stroke = 0.3,
+             alpha = 0.5,
+             position = position_jitter(w = 0, h = 0.1)) +
+  geom_smooth(aes(colour = died_of_covid), 
+              method = "gam", 
+              se = FALSE,
+              linewidth = 5) + 
+  scale_colour_manual(values = covid_colours, 
+                      aesthetics = c("colour", "fill")) + 
+  geom_smooth(method = "lm", 
+              se = FALSE, 
+              colour = "#332288",
+              linewidth = 3,
+              lty = "dashed") + 
+  labs(x = "Age",
+       y = "Duration of stay",
+       title = "Hospital stay of patients with COVID-19") + 
+  theme_minimal()
+
+colorBlindness::cvdPlot()
 
 # older people were hospitalised for longer than youger people
 # hospitalised older people, that died of covid, died sooner than younger people
