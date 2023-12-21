@@ -34,13 +34,14 @@ Confirmed cases of covid-19 were spread throughout the population with a greater
 
 ```{r source-selenkovas, echo = FALSE, include= FALSE, warning = FALSE, message = FALSE}
 
-source("scripts/data visualisations/02_selenkovas_visualisations.R")
+source("scripts/data visualisations/02_selenkovas_figure_script.R")
 
 ```
-
-
-```{r figure-selenkovas, echo = FALSE, warning = FALSE, message = FALSE, fig.asp=0.8, fig.width=4.5}
+# Affect of age on duration of hospitalisation 
+```{r figure-selenkovas, echo = FALSE, warning = FALSE, message = FALSE, out.width = "70%"}
 
 plot(hospitalisation_figure)
 
 ```
+
+Older patients were hospitalised for longer than younger patients (blue dashed line represents this trend). Older hospitalised patients, that died, died sooner than younger ones (this trend is represented by the solid purple line). There were no deaths of hospitalised children under 17. Although not visible in the figure, majority of the children that were hospitalised were under the age of 5.
