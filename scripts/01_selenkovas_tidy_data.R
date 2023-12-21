@@ -4,8 +4,6 @@
 library(tidyverse) # tidy data packages
 library(janitor) # cleans variable names
 library(lubridate) # makes sure dates are processed properly
-library(rstatix)
-library(patchwork)
 library(colorBlindness)
 
 #__________________________----
@@ -163,8 +161,3 @@ new_covid %>% ggplot(
   theme_minimal()
 
 colorBlindness::cvdPlot()
-
-# older people were hospitalised for longer than youger people
-# hospitalised older people, that died of covid, died sooner than younger people
-# no hospitalised people under 20(???), including children, died
-# most children hospitalised were under 5

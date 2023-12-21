@@ -13,32 +13,34 @@ hospitalisation_figure <- new_covid %>%
              y = duration_hosp_days)) + 
   geom_vline(xintercept = min(minimum_age_death$new_age_years),
              linetype = 2,
+             linewidth = 1.75,
              color = "darkorange") + 
   geom_point(aes(fill = died_of_covid),
              shape = 21,
              colour = "black",
-             size = 1.75,
+             size = 1.5,
              stroke = 0.3,
              alpha = 0.6,
-             position = position_jitter(w = 0, h = 0.2),
-             show.legend = FALSE) +
-  geom_smooth(aes(colour = died_of_covid), 
+             position = position_jitter(w = 0, h = 0.2)) +
+  geom_smooth(data = subset(new_covid, died_of_covid %in% c("Yes")),
+              aes(colour = died_of_covid), 
               method = "gam", 
               se = FALSE,
-              linewidth = 3) + 
+              linewidth = 3,
+              show.legend = FALSE) + 
   scale_colour_manual(values = covid_colours, 
                       aesthetics = c("colour", "fill")) + 
   geom_smooth(method = "lm", 
               se = FALSE, 
               colour = "#332288",
-              linewidth = 1.5,
+              linewidth = 2.5,
               lty = "dashed") + 
-  geom_label(aes(x = 10, y = 20,
-                label = "There were no deaths \n of hospitalised children under 17"),
-            size = 2.5,
+  geom_label(aes(x = 17, y = 70,
+                label = "There were no deaths of \n hospitalised children under 17"),
+            size = 3.5,
             colour = "black",
             fill = alpha(c("white"), 0.5)) + 
-  guides(colour = guide_legend(title = "Did the patient die?")) + 
+  guides(fill = guide_legend(title = "Did the patient die?")) + 
   labs(x = "Age",
        y = "Duration of stay (days)",
        title = "Duration of hospitalisation of patients with COVID-19",
@@ -55,5 +57,5 @@ hospitalisation_figure <- new_covid %>%
 
 # older people were hospitalised for longer than youger people
 # hospitalised older people, that died of covid, died sooner than younger people
-# no hospitalised people under 20(???), including children, died
+# no deaths under 17
 # most children hospitalised were under 5
