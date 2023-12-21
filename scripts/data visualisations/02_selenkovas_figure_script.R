@@ -8,9 +8,9 @@ minimum_age_death <- new_covid %>%
 
 covid_colours <- c("#117733", "#882255")
 
-new_covid %>% ggplot(
-  aes(x = new_age_years,
-      y = duration_hosp_days)) + 
+hospitalisation_figure <- new_covid %>%
+  ggplot(aes(x = new_age_years,
+             y = duration_hosp_days)) + 
   geom_vline(xintercept = min(minimum_age_death$new_age_years),
              linetype = 2,
              color = "darkorange") + 
